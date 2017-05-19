@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise';
-import {LocalStorageService} from "../services/local-storage.service";
+import {JwtTokenService} from "../services/jwt-token.service";
+import {Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -16,24 +18,13 @@ export class LoginComponent implements OnInit {
     password: ''
 };
 
-  constructor(public http:Http, private localStorage: LocalStorageService) {
-    this.localStorage.set('nome', 'Simone')
-        .set('curso', 'angular2');
-
-    console.log(this.localStorage.get('nome'));
-    console.log(this.localStorage.get('curso'));
-    console.log(this.localStorage.get('nada'));
-
-    this.localStorage.setObject('object', {
-      'nome' : 'Simone Moraes'
-    });
-
-    console.log(this.localStorage.getObject('object'));
-    console.log(window.localStorage['object1']);
-    console.log(this.localStorage.getObject('object1'));
-    //this.localStorage.remove('nome').remove('curso').remove('object');
-
-  }
+  redirectAfterLogin = [ '/products/list' ];
+  constructor(
+      public http:Http,
+      private jwtToken: JwtTokenService,
+      private router:Router,
+      private auth:AuthService
+  ) {}
 
   ngOnInit() {
   }
@@ -43,7 +34,12 @@ export class LoginComponent implements OnInit {
       this.http
           .post('http://localhost:8000/api/login', this.user)
           .toPromise()
-          .then(response => console.log(response));
+          .then( response => {
+              this.auth.check = true;
+              this.jwtToken.token = response.json().token;
+              this.router.navigate( this.redirectAfterLogin );
+          });
   }
 
 }
+

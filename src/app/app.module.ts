@@ -8,12 +8,21 @@ import {routing} from './app.routing';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import {LocalStorageService} from "./services/local-storage.service";
+import {JwtTokenService} from "./services/jwt-token.service";
+import { ProductListComponent } from './products/product-list/product-list.component';
+import {AuthService} from "./services/auth.service";
+import {AuthGuardRouterService} from "./services/auth-guard-router.service";
+import { MenuComponent } from './menu/menu.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ProductListComponent,
+    MenuComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +32,10 @@ import {LocalStorageService} from "./services/local-storage.service";
     routing
   ],
   providers: [
-      LocalStorageService
+    LocalStorageService,
+    JwtTokenService,
+    AuthService,
+    AuthGuardRouterService
   ],
   bootstrap: [AppComponent]
 })
