@@ -14,6 +14,7 @@ import {AuthService} from "./services/auth.service";
 import {AuthGuardRouterService} from "./services/auth-guard-router.service";
 import { MenuComponent } from './menu/menu.component';
 import { LogoutComponent } from './logout/logout.component';
+import {DefaultRequestOptionsService} from "./services/default-request-options.service";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { LogoutComponent } from './logout/logout.component';
     LocalStorageService,
     JwtTokenService,
     AuthService,
-    AuthGuardRouterService
+    AuthGuardRouterService,
+      DefaultRequestOptionsService
   ],
   bootstrap: [AppComponent]
 })
